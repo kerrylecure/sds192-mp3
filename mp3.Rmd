@@ -4,9 +4,21 @@ author: "Libby Leung, Madeleine Hickman, Kerry LeCure"
 date: "11/13/2017"
 output: html_document
 ---
-Problem statement (need to be paraphrased): Hollywood seems to be more repetitive than it used to be. Is this true? We now have not only sequels, but also remakes and reboots. Are these follow-up films more common today than they used to be? Can you trace the evolution of sequels across time in Hollywood? Are sequels more frequent today? Is the spacing between a sequel and its original shorter than it used to be?
-```{r, include=FALSE}
+Probelm Statement (need to rephrase): Genre Multiplicity: Prof. Keller explained how the labor model in Hollywood has changed over time, specifically with respect to the 1947 court decision that broke up the vertical integration of studios. Is it true that movies made today tend to have overlapping genres in a way that they did not in the past? Is is true that older movies tended to fit squarely in one genre, while more recent movies tend to span multiple genres? Is there a historical moment where this genre complexity begins? Does it have patterns of any discernible kind?
+```{r, message=FALSE}
 library(mdsr)
 library(RMySQL)
 db <- dbConnect_scidb(dbname = "imdb")
 ```
+```{r}
+db %>%
+  dbGetQuery("SELECT *
+             FROM info_type;")
+```
+```{r}
+db %>%
+  dbGetQuery("SELECT *
+             FROM movie_info
+             WHERE info_type_id = 3;")
+```
+

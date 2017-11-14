@@ -29,7 +29,7 @@ db %>%
   dbGetQuery("SELECT *
              FROM title t
              JOIN movie_info mi ON mi.movie_id = t.title
-             WHERE mi.info_type_id = 3
+             WHERE mi.info_type_id = 3 AND t.kind_id = 1
              LIMIT 1000;")
 ```
 

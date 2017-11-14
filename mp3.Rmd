@@ -28,7 +28,9 @@ db %>%
 db %>%
   dbGetQuery("SELECT *
              FROM title t
-             JOIN movie_info mi ON mi.id = t.id;")
+             JOIN movie_info mi ON mi.movie_id = t.title
+             WHERE mi.info_type_id = 3
+             LIMIT 1000;")
 ```
 
 github respository link: https://github.com/kerrylecure/sds192-mp3

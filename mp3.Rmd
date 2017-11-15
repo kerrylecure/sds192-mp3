@@ -4,7 +4,7 @@ author: "Libby Leung, Madeleine Hickman, Kerry LeCure"
 date: "11/13/2017"
 output: html_document
 ---
-Probelm Statement (need to rephrase): Genre Multiplicity: Prof. Keller explained how the labor model in Hollywood has changed over time, specifically with respect to the 1947 court decision that broke up the vertical integration of studios. Is it true that movies made today tend to have overlapping genres in a way that they did not in the past? Is is true that older movies tended to fit squarely in one genre, while more recent movies tend to span multiple genres? Is there a historical moment where this genre complexity begins? Does it have patterns of any discernible kind?
+Probelm Statement: Do more recent movies tend to have more genres attached to them versus older movies (pre-1947)? Is there a year in which this became apparent, and are there any kinds of patterns?
 ```{r, message=FALSE}
 library(mdsr)
 library(RMySQL)
@@ -13,7 +13,8 @@ db <- dbConnect_scidb(dbname = "imdb")
 ```{r}
 db %>%
   dbGetQuery("SELECT *
-             FROM info_type;")
+             FROM info_type
+             LIMIT 10;")
 db %>%
   dbGetQuery("SELECT * FROM kind_type;")
 ```
@@ -25,7 +26,7 @@ db %>%
              LIMIT 10;")
 ```
 
-```{r}
+```{r, results='hide'}
 db %>%
   dbGetQuery("SELECT t.id, t.title, t.production_year, mi.info_type_id, mi.info
              FROM title t
@@ -39,6 +40,7 @@ db %>%
              mi.info_type_id IS NULL OR
              mi.info IS NULL)
              LIMIT 1000;")
+#results are hidden from HTML to make the document more readable
 ```
 
 

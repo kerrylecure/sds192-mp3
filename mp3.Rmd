@@ -27,7 +27,7 @@ db %>%
 
 ```{r}
 db %>%
-  dbGetQuery("SELECT *
+  dbGetQuery("SELECT t.id, t.title, t.kind_id, t.production_year, mi.movie_id, mi.info_type_id, mi.info
              FROM title t
              JOIN movie_info mi ON mi.movie_id = t.title
              WHERE mi.info_type_id = 3 AND t.kind_id = 1

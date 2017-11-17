@@ -28,21 +28,25 @@ db %>%
 
 ```{r, results='hide'}
 db %>%
-  dbGetQuery("SELECT t.id, t.title, t.production_year, mi.info_type_id, mi.info
+  dbGetQuery("SELECT t.id, t.title, t.production_year, mi.info, cn.country_code
              FROM title t
              JOIN movie_info mi ON mi.movie_id = t.title
+             JOIN movie_companies mc ON mc.movie_id = mi.movie_id
+             JOIN company_name cn ON cn.id = mc.company_id
              WHERE mi.info_type_id = 3 AND t.kind_id = 1
+             AND cn.country_code = '[us]'
              AND NOT (t.id IS NULL OR
              t.title IS NULL OR
              t.kind_id IS NULL OR
              t.production_year IS NULL OR
              mi.movie_id IS NULL OR
-             mi.info_type_id IS NULL OR
-             mi.info IS NULL)
+             mi.info IS NULL OR
+             cn.country_code IS NULL)
              ORDER BY t.production_year
              LIMIT 1000;")
 #results are hidden from HTML to make the document more readable
 ```
+
 
 
 github respository link: https://github.com/kerrylecure/sds192-mp3

@@ -42,6 +42,7 @@ movies <- db %>%
              mi.movie_id IS NULL OR
              mi.info IS NULL OR
              cn.country_code IS NULL)
+             AND production_year BETWEEN 1920 AND 2000
              ORDER BY t.production_year
              LIMIT 1000;")
 #results are hidden from HTML to make the document more readable

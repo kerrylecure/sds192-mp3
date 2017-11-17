@@ -27,7 +27,7 @@ db %>%
 ```
 
 ```{r, results='hide'}
-db %>%
+movies <- db %>%
   dbGetQuery("SELECT t.id, t.title, t.production_year, mi.info, cn.country_code
              FROM title t
              JOIN movie_info mi ON mi.id = t.id

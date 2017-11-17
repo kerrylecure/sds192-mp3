@@ -39,6 +39,7 @@ db %>%
              mi.movie_id IS NULL OR
              mi.info_type_id IS NULL OR
              mi.info IS NULL)
+             ORDER BY t.production_year
              LIMIT 1000;")
 #results are hidden from HTML to make the document more readable
 ```

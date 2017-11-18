@@ -8,6 +8,7 @@ Probelm Statement: Do more recent movies tend to have more genres attached to th
 ```{r, message=FALSE}
 library(mdsr)
 library(RMySQL)
+library(tidyverse)
 db <- dbConnect_scidb(dbname = "imdb")
 ```
 ```{r}
@@ -43,10 +44,16 @@ movies <- db %>%
              mi.info IS NULL OR
              cn.country_code IS NULL)
              AND t.production_year BETWEEN 1920 AND 2000
-             ORDER BY t.production_year
-             LIMIT 1000;")
-movies
+             ORDER BY t.production_year;")
+groupedmovies <- movies %>%
+  group_by(production_year) %>%
+  count(info)
 #results are hidden from HTML to make the document more readable
+```
+```{r}
+ggplot(groupedmovies, aes(x = info, y = n, fill = info)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~production_year)
 ```
 
 github respository link: https://github.com/kerrylecure/sds192-mp3

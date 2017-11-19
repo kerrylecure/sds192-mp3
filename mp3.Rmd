@@ -45,15 +45,17 @@ movies <- db %>%
              cn.country_code IS NULL)
              AND t.production_year BETWEEN 1920 AND 2000
              ORDER BY t.production_year;")
+
 groupedmovies <- movies %>%
-  group_by(production_year) %>%
-  count(info)
+  group_by(movie_id, production_year) %>%
+  summarize(genrecount = n_distinct(info), n = n())
 #results are hidden from HTML to make the document more readable
 ```
+
 ```{r}
-ggplot(groupedmovies, aes(x = info, y = n, fill = info)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  facet_wrap(~production_year)
+ggplot(groupedmovies, aes(x = production_year, y = genrecount)) +
+  geom_jitter() +
+  geom_vline(xintercept = 1947, color = "red")
 ```
 
 github respository link: https://github.com/kerrylecure/sds192-mp3

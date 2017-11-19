@@ -29,7 +29,7 @@ db %>%
 
 ```{r, results='hide'}
 movies <- db %>%
-  dbGetQuery("SELECT mi.movie_id, t.title, t.production_year, mi.info, cn.country_code
+  dbGetQuery("SELECT DISTINCT mi.movie_id, t.title, t.production_year, mi.info, cn.country_code
              FROM aka_title t
              JOIN movie_info mi ON mi.movie_id = t.movie_id
              JOIN movie_companies mc ON mc.movie_id = mi.movie_id

@@ -6,14 +6,14 @@ output: html_document
 ---
 Probelm Statement: Do more recent movies tend to have more genres attached to them versus older movies (pre-1947)? Is there a year in which this became apparent, and are there any kinds of patterns?
 ```{r, message=FALSE}
-library(mdsr)
-library(RMySQL)
-library(tidyverse)
-library(ggthemes)
-db <- dbConnect_scidb(dbname = "imdb")
+library(mdsr) #required to connect to database
+library(RMySQL) #required to use SQL
+library(tidyverse) #needed to create graphic
+library(ggthemes) #needed to change theme of graphic
+db <- dbConnect_scidb(dbname = "imdb") #database
 ```
 ```{r, results='hide'}
-movies <- db %>%
+movies <- db %>% #renamed database to make it easier to work with
   dbGetQuery("SELECT DISTINCT mi.movie_id, t.title, t.production_year, mi.info
              FROM aka_title t
              JOIN movie_info mi ON mi.movie_id = t.movie_id
@@ -30,17 +30,18 @@ movies <- db %>%
              cn.country_code IS NULL)
              AND t.production_year BETWEEN 1920 AND 2000
              ORDER BY t.production_year;")
+#needed to select for movie_id and title to ensure each movie_id was linked to a specific title, and then sort data by movie_id. production_year and info needed to know what genres were used and when the movies were produced. movie_info was joined to aka_title to obtain the production dates and kind_id and movie_companies was joined to movie_id to later join company_name to mc.company_id in order to sort for movies that were only created in the US, as the problem deals with Hollywood movies. mi.info_type_id = 3 was used in order to select for the genres of the movies and t.kind_id = 1 was used to select for movies. we then took out data with NA listed for the categories we were using. we sorted t.production_year for between 1920 and 2000 as a way to trim down data, as Hollywood experienced a boom in the 1920s and 2000 felt like an appropriate modern stopping point to us. the films were then sorted by t.production_year.
 
 groupedmovies <- movies %>%
   group_by(movie_id, production_year) %>%
   summarize(genrecount = n_distinct(info), n = n())
-#results are hidden from HTML to make the document more readable
+#results are hidden from HTML to make the document more readable. the moveis were grouped by movie_id and production_year so as to make the summarize function give each movie its own count of distinct genres. n was created but not used in the final graph.
 ```
 ```{r}
-ggplot(groupedmovies, aes(x = production_year, y = genrecount)) +
-  geom_jitter(alpha = 0.2) +
-  geom_vline(xintercept = 1947, color = "red") +
-  theme_economist()
+ggplot(groupedmovies, aes(x = production_year, y = genrecount)) + #to show the different movies and the amounts of genres they have based on the year they were produced.
+  geom_jitter(alpha = 0.2) + #used geom_jitter to make the plot more readable.
+  geom_vline(xintercept = 1947, color = "red") + #indicate where 1947 was, a year that was specifically mentioned in the problem statement.
+  theme_economist() #this is more of a personal choice as I am fond of this theme.
 ```
 
 github respository link: https://github.com/kerrylecure/sds192-mp3

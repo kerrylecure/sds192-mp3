@@ -9,6 +9,7 @@ Probelm Statement: Do more recent movies tend to have more genres attached to th
 library(mdsr)
 library(RMySQL)
 library(tidyverse)
+library(ggthemes)
 db <- dbConnect_scidb(dbname = "imdb")
 ```
 ```{r}
@@ -54,8 +55,9 @@ groupedmovies <- movies %>%
 
 ```{r}
 ggplot(groupedmovies, aes(x = production_year, y = genrecount)) +
-  geom_jitter() +
-  geom_vline(xintercept = 1947, color = "red")
+  geom_jitter(alpha = 0.2) +
+  geom_vline(xintercept = 1947, color = "red") +
+  theme_economist()
 ```
 
 github respository link: https://github.com/kerrylecure/sds192-mp3

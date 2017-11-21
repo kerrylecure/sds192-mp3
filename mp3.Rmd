@@ -38,17 +38,13 @@ groupedmovies <- movies %>%
 #results are hidden from HTML to make the document more readable. the moveis were grouped by movie_id and production_year so as to make the summarize function give each movie its own count of distinct genres. n was created but not used in the final graph.
 ```
 ```{r}
-<<<<<<< HEAD
-ggplot(groupedmovies, aes(x = production_year, y = genrecount)) +
-  geom_jitter() +
-  geom_vline(xintercept = 1947, color = "red")+
-  facet_grid(~genrecount)
-=======
 ggplot(groupedmovies, aes(x = production_year, y = genrecount)) + #to show the different movies and the amounts of genres they have based on the year they were produced.
   geom_jitter(alpha = 0.2) + #used geom_jitter to make the plot more readable.
   geom_vline(xintercept = 1947, color = "red") + #indicate where 1947 was, a year that was specifically mentioned in the problem statement.
   theme_economist() #this is more of a personal choice as I am fond of this theme.
->>>>>>> ea2e0a7d6533dfa879d767b79764240171534fa6
 ```
+
+#Analysis
+
 
 github respository link: https://github.com/kerrylecure/sds192-mp3

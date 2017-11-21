@@ -55,7 +55,8 @@ groupedmovies <- movies %>%
 ```{r}
 ggplot(groupedmovies, aes(x = production_year, y = genrecount)) +
   geom_jitter() +
-  geom_vline(xintercept = 1947, color = "red")
+  geom_vline(xintercept = 1947, color = "red")+
+  facet_grid(~genrecount)
 ```
 
 github respository link: https://github.com/kerrylecure/sds192-mp3

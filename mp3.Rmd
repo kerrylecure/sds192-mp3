@@ -13,7 +13,7 @@ library(ggthemes) #needed to change theme of graphic
 db <- dbConnect_scidb(dbname = "imdb") #database
 ```
 ```{r, results='hide'}
-movies <- db %>% #renamed database to make it easier to work with
+movies <- db %>% 
   dbGetQuery("SELECT DISTINCT mi.movie_id, t.title, t.production_year, mi.info
              FROM aka_title t
              JOIN movie_info mi ON mi.movie_id = t.movie_id
@@ -30,7 +30,7 @@ movies <- db %>% #renamed database to make it easier to work with
              cn.country_code IS NULL)
              AND t.production_year BETWEEN 1920 AND 2000
              ORDER BY t.production_year;")
-#needed to select for movie_id and title to ensure each movie_id was linked to a specific title, and then sort data by movie_id. production_year and info needed to know what genres were used and when the movies were produced. movie_info was joined to aka_title to obtain the production dates and kind_id and movie_companies was joined to movie_id to later join company_name to mc.company_id in order to sort for movies that were only created in the US, as the problem deals with Hollywood movies. mi.info_type_id = 3 was used in order to select for the genres of the movies and t.kind_id = 1 was used to select for movies. we then took out data with NA listed for the categories we were using. we sorted t.production_year for between 1920 and 2000 as a way to trim down data, as Hollywood experienced a boom in the 1920s and 2000 felt like an appropriate modern stopping point to us. the films were then sorted by t.production_year.
+#renamed database to make it easier to work with. needed to select for movie_id and title to ensure each movie_id was linked to a specific title, and then sort data by movie_id. production_year and info needed to know what genres were used and when the movies were produced. movie_info was joined to aka_title to obtain the production dates and kind_id and movie_companies was joined to movie_id to later join company_name to mc.company_id in order to sort for movies that were only created in the US, as the problem deals with Hollywood movies. mi.info_type_id = 3 was used in order to select for the genres of the movies and t.kind_id = 1 was used to select for movies. we then took out data with NA listed for the categories we were using. we sorted t.production_year for between 1920 and 2000 as a way to trim down data, as Hollywood experienced a boom in the 1920s and 2000 felt like an appropriate modern stopping point to us. the films were then sorted by t.production_year.
 
 groupedmovies <- movies %>%
   group_by(movie_id, production_year) %>%
@@ -45,6 +45,14 @@ ggplot(groupedmovies, aes(x = production_year, y = genrecount)) + #to show the d
 ```
 
 #Analysis
+During the 1920’s the concept of film genres were established. These genres were simplistic only ranging from westerns to horror. However in the 1930’s, the concept of genres involved into sub genres. For example, fiction movies had a sub genres of chick flicks, tragedy, and thriller. Though illustrated in the graph, the early years of filmmaking did have a lower genre count, they did not fit squarely into one genre. A good portion of the movies did have genre counts of two or more, but not any higher than eight. As the filmmaking industry expanded, more directors were willing add more genres to their movie rather than sticking to one.
+
+ 
+
+ As the years progressed, many film directors became more creative by incorporating different elements from different genres in their movies. Technology for the filmmaking industry improved, making the director’s visions a reality. As a result, looking at the graph, there is a strong and steady increase in genre count in the last twenty years. For example, in the movie Avatar has genres such as action, adventure, sci-fi, and fantasy. Typical modern movies have an average of three genres in their movie. Also many modern movie critics have taken into consideration of the movies created today. Now, these movie critics have decided to create new movie genres because of the director’s new innovations within the movie, thus increasing the creation of more genres. While there is no specific historical moment that contributed to the multiplicity growth of genres, there are historical events in each generation that correlate with the genre count trend. Instead there might be a possibility that the nature of the movies didn’t change, and that the culture and how people perceived movies changed over time rather than a specific historical time.
+ 
+ 
+ Though there is no distinct trend, there are certain time periods that illustrate genre growth and decline. This growth also correlates with the number of movies made based on the historical context during that time period. For example, there is a strong growth of genre count between 1920’s and 1930’s. This is because many movies were made and genre types were easy to recognize. As more directors kept making movies, the more genres they had explored and created. Through the mid-1930s, sub genres were created making the genre count even higher than before. Also, technology to better filmmaking was created. For example, the mobile camera was invented so shooting certain scenes were more flexible and original. However, between 1950’s and 1960’s there was a negative correlation in the genre count. This is because many movie companies had financial difficulties. Therefore, directors were unable to be creative in their movies because they had a low budget. As a result, the directors were simplistic and only created movies that were only a few genres instead of many. In addition, the invention of the television had turned many moviegoers away from the theaters contributing the financial decline of the movie industry. To conclude, there are no define trends looking at the graph holistically, however, analyzing different time periods can help us better understand why some parts of the graph are negative while others are positive with contribution of advances in technology and historical contexts of that time period.
 
 
 github respository link: https://github.com/kerrylecure/sds192-mp3
